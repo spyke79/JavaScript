@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weater App</title>
+</head>
+
+<body>
+    <h1>Previsioni Meteo</h1>
+    <p>
+        Località: <input type="text" id="localita"><button id="btn">Cerca</button>
+    </p>
+    <p id="ris">
+        Tempo: Sunny
+        Gradi: 22°
+        Città: Napoli
+        Regione: Campania
+        Nazione: Italia
+        Lat:
+        Lon:
+        Ora Previsione: time
+    </p>
+
+    <script>
+
+        const btn = document.querySelector("#btn")
+        const localita = document.querySelector("#localita")
+        const ris = document.querySelector("#ris")
+
+        btn.addEventListener("click", () => {
+            let appID = '62ed2ab207b8bbd48ecfe99a96f0065f'
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${localita.value.trim().toLocaleLowerCase()}&appid=${appID}`
+            
+            fetch(url)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    ris.innerHTML = "Main: " + data.weather[0].main
+                    ris.innerHTML += "<br>Description: " + data.weather[0].description
+                    ris.innerHTML += `<br>Img: <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`
+                })
+        })
+
+    </script>
+
+</body>
+
+</html>
